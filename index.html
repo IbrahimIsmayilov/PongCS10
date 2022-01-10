@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Pong</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h1>Pong</h1>
-        <canvas id="canvas"></canvas>
-    </body>
-    <script src="main.js"></script>
+
+<head>
+	<title>PONG</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="openingText">
+  <h1 id="welcomeText">WELCOME</h1>
+  <h2 id="toText">TO</h2>
+  <img id="pongTextImg" src="img/pong.png" alt="PONG">
+  <btn id="oneBtn">ONE PLAYER</btn>
+  <btn id="twoBtn">TWO PLAYERS</btn>
+  </div>
+  <div id="oneSelection">
+  <btn id="easyBtn1p" class="hidden">EASY MODE</btn>
+  <btn id="mediumBtn1p" class="hidden">MEDIUM MODE</btn>
+  <btn id="hardBtn1p" class="hidden">HARD MODE</btn>
+  </div>
+  <div id="twoSelection">
+  <btn id="easyBtn2p" class="hidden">EASY MODE</btn>
+  <btn id="mediumBtn2p" class="hidden">MEDIUM MODE</btn>
+  <btn id="hardBtn2p" class="hidden">HARD MODE</btn>
+  </div>
+
+
+	<canvas id="canvas" class="hidden"></canvas>
+
+	<script src="main.js">
+	</script>
+</body>
+
 </html>

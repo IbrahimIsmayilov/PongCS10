@@ -75,6 +75,10 @@ function pongTwoP() {
         paddleY1 = 200;
         paddleY2 = 200;
         xVelocity = prevXVelocity;
+        yVelocity = Math.random() * 5;
+        while (yVelocity < 1.5) {
+        yVelocity = Math.random() * 5;
+        }
         frameCount = 0;
       }
     }
@@ -101,6 +105,10 @@ function pongTwoP() {
         paddleY1 = 200;
         paddleY2 = 200;
         xVelocity = prevXVelocity;
+        yVelocity = Math.random() * 5;
+        while (yVelocity < 1.5) {
+        yVelocity = Math.random() * 5;
+        }
         frameCount = 0;
       }
     }
@@ -139,57 +147,71 @@ function pongTwoP() {
 }
 // How can the computer load code beyond this? Isn't the computer stuck in running this infinite function?
 
+function pongOneP() {
+  // Drawing the background
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, cnv.width, cnv.height);
+
+  // Drawing the white, bouncy parts
+  ctx.strokeStyle = "white";
+  ctx.strokeRect(0, 0, 25, cnv.height);
+  requestAnimationFrame(pongOneP);
+}
+
 // Event Listeners
 document.addEventListener("keydown", keydownHandler);
 document.addEventListener("keyup", keyupHandler);
 oneBtn.addEventListener("click", choseOneP);
 twoBtn.addEventListener("click", choseTwoP);
+easyBtn2p.addEventListener("click", easyPong2p);
+mediumBtn2p.addEventListener("click", mediumPong2p);
+hardBtn2p.addEventListener("click", hardPong2p);
 easyBtn1p.addEventListener("click", easyPong1p);
-mediumBtn1p.addEventListener("click", mediumPong1p);
-hardBtn1p.addEventListener("click", hardPong1p);
+
 
 function choseTwoP() {
   openingText.classList.add("hidden");
-  easyBtn2p.classList.remove("hidden");
-  mediumBtn2p.classList.remove("hidden");
-  hardBtn2p.classList.remove("hidden");
+  twoSelection.classList.remove("hidden");
 }
 
 function choseOneP() {
   openingText.classList.add("hidden");
-  easyBtn1p.classList.remove("hidden");
-  mediumBtn1p.classList.remove("hidden");
-  hardBtn1p.classList.remove("hidden");
+  oneSelection.classList.remove("hidden");
 }
 
-function easyPong1p() {
+function easyPong2p() {
   // let xVelocity = 7; Why does this not work?
-  oneSelection.classList.add("hidden");
+  twoSelection.classList.add("hidden");
+  cnv.classList.remove("hidden");
   xVelocity = 6.5;
   prevXVelocity = xVelocity;
-  cnv.classList.remove("hidden");
   calcLimit = 10;
   pongTwoP();
 }
 
-function mediumPong1p() {
-  oneSelection.classList.add("hidden");
+function mediumPong2p() {
+  twoSelection.classList.add("hidden");
+  cnv.classList.remove("hidden");
   xVelocity = 8;
   prevXVelocity = xVelocity;
-  cnv.classList.remove("hidden");
   calcLimit = 8;
   pongTwoP();
 }
 
-function hardPong1p() {
-  oneSelection.classList.add("hidden");
+function hardPong2p() {
+  twoSelection.classList.add("hidden");
+  cnv.classList.remove("hidden");
   xVelocity = 9.5;
   prevXVelocity = xVelocity;
-  cnv.classList.remove("hidden");
   calcLimit = 7;
   pongTwoP();
 }
 
+function easyPong1p() {
+  oneSelection.classList.add("hidden");
+  cnv.classList.remove("hidden");
+  pongOneP();
+}
 function keydownHandler(event) {
   // Checking if S or W key is pressed
   if (event.code === "KeyS") {

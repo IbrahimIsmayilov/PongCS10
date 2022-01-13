@@ -20,6 +20,7 @@ let xVelocity;
 let scoreLeft = 0;
 let scoreRight = 0;
 let frameCount = 0;
+let ballMoveFrame = 60;
 let twoBtn = document.getElementById("twoBtn");
 let oneBtn = document.getElementById("oneBtn");
 let easyBtn1p = document.getElementById("easyBtn1p");
@@ -34,6 +35,10 @@ let twoSelection = document.getElementById("twoSelection");
 let yVelocity = Math.random() * 5;
 
 function pongTwoP() {
+  // Updating the frame count every 1/60th of a second
+  frameCount++;
+
+  if (frameCount > ballMoveFrame) {
   // Drawing the background
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, cnv.width, cnv.height);
@@ -47,6 +52,7 @@ function pongTwoP() {
   }
 
   // Drawing the ball
+  ctx.fillRect(ballX, ballY, 20, 20);
   ballX += xVelocity;
   ballY += yVelocity;
 
@@ -54,34 +60,11 @@ function pongTwoP() {
   ctx.font = "50px Comic Sans MS, Comic Sans, cursive";
   ctx.strokeStyle = "white";
   ctx.strokeText(scoreLeft, 310, 70);
-  ctx.fillRect(ballX, ballY, 20, 20);
   ctx.strokeText(scoreRight, 430, 70); //I dont understand why they are equally far apart from each other. I need the relationship between the distances of the two from the middle squares explained to me.
 
   // Checking ball collision with the left paddle
-  // Why does the scoreboard not work for the first score?
-  if (ballX < 35) {
-    if (ballY > paddleY1 - 20 && ballY < paddleY1 + 100) {
-      xVelocity *= -1;
-    } else {
-      frameCount++;
-      if (ballX < -20 && frameCount < calcLimit) {
-        scoreRight++;
-        xVelocity = 0;
-        console.log(xVelocity);
-      }
-      if (frameCount === 50) {
-        ballX = 350;
-        ballY = 160;
-        paddleY1 = 200;
-        paddleY2 = 200;
-        xVelocity = prevXVelocity;
-        yVelocity = Math.random() * 5;
-        while (yVelocity < 1.5) {
-        yVelocity = Math.random() * 5;
-        }
-        frameCount = 0;
-      }
-    }
+  if (ballX <= 35 && ballY > paddleY1 - 20 && ballY < paddleY1 + 100 || ballX >= 20 && ballY > paddleY1 - 20 && ballY < paddleY1 + 100 || ballY + 20 >= paddleY1 && ballX + 20 >= 20 && ballX <= 35) {
+    ballX *= -1;
   }
 
   // Checking ball collision with the right paddle
@@ -139,11 +122,14 @@ function pongTwoP() {
     paddleY2 -= 5.75;
   }
 
+
   // Drawing the paddles
   ctx.fillRect(20, paddleY1, 15, 100);
   ctx.fillRect(765, paddleY2, 15, 100);
 
+
   requestAnimationFrame(pongTwoP);
+}
 }
 // How can the computer load code beyond this? Isn't the computer stuck in running this infinite function?
 
@@ -156,6 +142,7 @@ function pongOneP() {
   ctx.strokeStyle = "white";
   ctx.strokeRect(0, 0, 25, cnv.height);
   requestAnimationFrame(pongOneP);
+
 }
 
 // Event Listeners

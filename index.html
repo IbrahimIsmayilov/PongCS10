@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Paint</title>
-    <link rel="stylesheet" href="style.css">
+	<title>PONG</title>
+	<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>Simple Paint</h1>
+  <div id="openingText">
+  <h1 id="welcomeText">WELCOME</h1>
+  <h2 id="toText">TO</h2>
+  <img id="pongTextImg" src="img/pong.png" alt="PONG">
+  <btn id="oneBtn">ONE PLAYER</btn>
+  <btn id="twoBtn">TWO PLAYERS</btn>
+  </div>
+  <div id="oneSelection" class="hidden">
+  <btn id="easyBtn1p">EASY MODE</btn>
+  <btn id="mediumBtn1p">MEDIUM MODE</btn>
+  <btn id="hardBtn1p">HARD MODE</btn>
+  </div>
+  <div id="twoSelection" class="hidden">
+  <btn id="easyBtn2p">EASY MODE</btn>
+  <btn id="mediumBtn2p">MEDIUM MODE</btn>
+  <btn id="hardBtn2p">HARD MODE</btn>
+  </div>
 
-    <canvas id="myCanvas"></canvas>
-    <!-- Color Palette -->
-    <div>
-        <button id="redBtn">red</button> <button id="greenBtn">green</button> <button id="blueBtn">blue</button> 
-        <p> 
-            <input id="colorPicker" type="color">    
-        </p>
-    </div>
 
-    <!-- Load JavaScript -->
-    <script src="main.js"></script>
+	<canvas id="canvas" class="hidden"></canvas>
+
+	<script src="main.js">
+	</script>
 </body>
+
 </html>

@@ -33,21 +33,49 @@ let frameCountTwo = 0;
 let hOne = document.getElementById("hOne");
 let hTwo = document.getElementById("hTwo");
 
-
+requestAnimationFrame(animateText);
 function animateText() {
   frameCountTwo++;
 
-  if (frameCountTwo > 100) {
-    hTwo.innerHTML = "W";
-  }
-
-  if (frameCountTwo > 150) {
+  if (frameCountTwo > 10) {
     hTwo.innerHTML = "We";
   }
 
-  
+  if (frameCountTwo > 20) {
+    hTwo.innerHTML = "Wel";
+  }
 
+  if (frameCountTwo > 30) {
+    hTwo.innerHTML = "Welc";
+  }
 
+  if (frameCountTwo > 40) {
+    hTwo.innerHTML = "Welco";
+  }
+
+  if (frameCountTwo > 50) {
+    hTwo.innerHTML = "Welcom";
+  }
+
+  if (frameCountTwo > 60) {
+    hTwo.innerHTML = "Welcome";
+  }
+
+  if (frameCountTwo > 70) {
+    hTwo.innerHTML = "Welcome T";
+  }
+
+  if (frameCountTwo > 70) {
+    hTwo.innerHTML = "Welcome T";
+  }
+
+  if (frameCountTwo > 70) {
+    hTwo.innerHTML = "Welcome T";
+  }
+
+  if (frameCountTwo > 70) {
+    hTwo.innerHTML = "Welcome T";
+  }
 
   requestAnimationFrame(animateText);
 }

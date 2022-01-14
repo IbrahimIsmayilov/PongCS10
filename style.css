@@ -14,11 +14,12 @@ btn {
 }
 
 .hOne {
-  border: 2px solid white;
+  border: 2px solid black;
 }
 
 .hTwo {
-  border: 2px solid white;
+  margin-top: 700px;
+  border: 2px solid black;
 }
 
 .oneBtn {

@@ -5,10 +5,23 @@ body {
 }
 
 btn {
-  border: 2px solid black;
   cursor: pointer;
+  border: 2px solid white;
 }
 
 .hidden {
   display: none;
+}
+
+.hOne {
+  border: 2px solid white;
+}
+
+.hTwo {
+  border: 2px solid white;
+}
+
+.oneBtn {
+  margin-top: 50px;
+  margin-right: 50px;
 }

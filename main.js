@@ -29,22 +29,24 @@ let hardBtn1p = document.getElementById("hardBtn1p");
 let easyBtn2p = document.getElementById("easyBtn2p");
 let mediumBtn2p = document.getElementById("mediumBtn2p");
 let hardBtn2p = document.getElementById("hardBtn2p");
-let openingText = document.getElementById("openingText");
-let oneSelection = document.getElementById("oneSelection");
-let twoSelection = document.getElementById("twoSelection");
 let frameCountTwo = 0;
-let pongP = document.getElementById("pongP");
-let pongO = document.getElementById("pongO");
-let pongN = document.getElementById("pongN");
-let pongG = document.getElementById("pongG");
 let hOne = document.getElementById("hOne");
+let hTwo = document.getElementById("hTwo");
+
 
 function animateText() {
   frameCountTwo++;
 
-  if (frameCountTwo === 5) {
-    hOne.innerHTML = "W"
+  if (frameCountTwo > 100) {
+    hTwo.innerHTML = "W";
   }
+
+  if (frameCountTwo > 150) {
+    hTwo.innerHTML = "We";
+  }
+
+  
+
 
 
   requestAnimationFrame(animateText);
@@ -102,7 +104,6 @@ function pongTwoP() {
 // How can the computer load code beyond this? Isn't the computer stuck in running this infinite function?
 
 
-
 function movePaddle() {
   // Drawing the background
   ctx.fillStyle = "black";
@@ -157,32 +158,48 @@ mediumBtn2p.addEventListener("click", mediumPong2p);
 hardBtn2p.addEventListener("click", hardPong2p);
 
 function choseTwoP() {
-  openingText.classList.add("hidden");
-  twoSelection.classList.remove("hidden");
+  hOne.classList.add("hidden");
+  hTwo.classList.add("hidden");
+  oneBtn.classList.add("hidden");
+  twoBtn.classList.add("hidden");
+  easyBtn2p.classList.remove("hidden");
+  mediumBtn2p.classList.remove("hidden");
+  hardBtn2p.classList.remove("hidden");
 }
 
 function choseOneP() {
-  openingText.classList.add("hidden");
-  oneSelection.classList.remove("hidden");
+  hOne.classList.add("hidden");
+  hTwo.classList.add("hidden");
+  oneBtn.classList.add("hidden");
+  twoBtn.classList.add("hidden");
+  easyBtn1p.classList.remove("hidden");
+  mediumBtn1p.classList.remove("hidden");
+  hardBtn1p.classList.remove("hidden");
 }
 
 function easyPong2p() {
   xVelocity = -6;
-  twoSelection.classList.add("hidden");
+  easyBtn2p.classList.add("hidden");
+  mediumBtn2p.classList.add("hidden");
+  hardBtn2p.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
 }
 
 function mediumPong2p() {
   xVelocity = 7;
-  twoSelection.classList.add("hidden");
+  easyBtn2p.classList.add("hidden");
+  mediumBtn2p.classList.add("hidden");
+  hardBtn2p.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
 }
 
 function hardPong2p() {
   xVelocity = 8;
-  twoSelection.classList.add("hidden");
+  easyBtn2p.classList.add("hidden");
+  mediumBtn2p.classList.add("hidden");
+  hardBtn2p.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
 }

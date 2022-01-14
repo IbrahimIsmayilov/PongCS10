@@ -18,7 +18,7 @@ let ballY = 160;
 let scoreLeft = 0;
 let scoreRight = 0;
 let frameCount = 0;
-let ballMoveFrame = 60;
+let ballMoveFrame = 0;
 let yVelocity = 2;
 let mouseIsPressed = false;
 let twoBtn = document.getElementById("twoBtn");
@@ -32,84 +32,120 @@ let hardBtn2p = document.getElementById("hardBtn2p");
 let openingText = document.getElementById("openingText");
 let oneSelection = document.getElementById("oneSelection");
 let twoSelection = document.getElementById("twoSelection");
+let frameCountTwo = 0;
+let pongP = document.getElementById("pongP");
+let pongO = document.getElementById("pongO");
+let pongN = document.getElementById("pongN");
+let pongG = document.getElementById("pongG");
+let hOne = document.getElementById("hOne");
+
+function animateText() {
+  frameCountTwo++;
+
+  if (frameCountTwo === 5) {
+    hOne.innerHTML = "W"
+  }
+
+
+  requestAnimationFrame(animateText);
+}
 
 function pongTwoP() {
   // Updating the frame count every 1/60th of a second
   frameCount++;
-  if (frameCount > ballMoveFrame) {
-    // Drawing the background
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, cnv.width, cnv.height);
 
-    // Drawing the line in the middle
-    ctx.fillStyle = "white";
-    let squareY = 15;
-    for (n = 1; n <= 30; n++) {
-      ctx.fillRect(380, squareY, 10, 10);
-      squareY += 35;
+  if (frameCount > ballMoveFrame) {
+
+    // Checking ball collision with the left paddle
+    if (ballX < 35 && ballX + 20 > 20 && ballY + 20 > paddleY1 && ballY < paddleY1 + 100) {
+      xVelocity *= -1;
+    } else if (ballX < -20) {
+      scoreLeft++;
+      ballMoveFrame = frameCount + 60;
     }
+
+    // Checking ball collision with the right paddle
+    if (ballX + 20 > 765 && ballX < 780 && ballY + 20 > paddleY2 && ballY < paddleY2 + 100) {
+      xVelocity *= -1;
+    } else if (ballX > 800) {
+      scoreRight++;
+      ballMoveFrame = frameCount + 60;
+    }
+
+    // Reverting the paddles back to their original positions after the ball has reappeared on the screen
+    if (frameCount === ballMoveFrame + 1) {
+      paddleY1 = 200;
+      paddleY2 = 200; 
+    }
+
+    movePaddle();
 
     // Drawing the ball
     ctx.fillRect(ballX, ballY, 20, 20);
     ballX += xVelocity;
     ballY += yVelocity;
 
-    // Scoreboard
-    ctx.font = "50px Comic Sans MS, Comic Sans, cursive";
-    ctx.strokeStyle = "white";
-    ctx.strokeText(scoreLeft, 310, 70);
-    ctx.strokeText(scoreRight, 430, 70); //I dont understand why they are equally far apart from each other. I need the relationship between the distances of the two from the middle squares explained to me.
-
-    // Checking ball collision with the right paddle
-    if (ballX < 35 && ballX + 20 > 20 && ballY + 20 > paddleY1 && ballY < paddleY1 + 100) {
-      xVelocity *= -1;
-    } else if (ballX <= -25) {
-      scoreLeft++;
-      ballMoveFrame = frameCount + 60;
-      ballX = 350;
-      ballY = 160;
-    }
-
-    // Checking ball collision with the left paddle
-    if (ballX > 765 && ballX + 20 > 20 && ballY + 20 > paddleY2 && ballY < paddleY2 + 100) {
-      xVelocity *= -1;
-    
-
-    }
-
     // Checking ball collision with the top and bottom of the screen
     if (ballY + 20 > canvas.height || ballY < 0) {
       yVelocity *= -1;
     }
 
-    // The S key to move the paddle down
-    if (sIsPressed && paddleY1 < 500) {
-      paddleY1 += 5.75;
-    }
-
-    // The W key to move the paddle up
-    if (wIsPressed && paddleY1 > 0) {
-      paddleY1 -= 5.75;
-    }
-
-    // The arrow up to move the paddle up
-    if (arrowDIsPressed && paddleY2 < 500) {
-      paddleY2 += 5.75;
-    }
-
-    // The arrow down to move the paddle down
-    if (arrowUIsPressed && paddleY2 > 0) {
-      paddleY2 -= 5.75;
-    }
-
-    // Drawing the paddles
-    ctx.fillRect(20, paddleY1, 15, 100);
-    ctx.fillRect(765, paddleY2, 15, 100);
+  } else {
+    movePaddle();
+    ballX = 350;
+    ballY = 160;
   }
+
   requestAnimationFrame(pongTwoP);
 }
+
 // How can the computer load code beyond this? Isn't the computer stuck in running this infinite function?
 
+
+
+function movePaddle() {
+  // Drawing the background
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, cnv.width, cnv.height);
+
+  // Drawing the line in the middle
+  ctx.fillStyle = "white";
+  let squareY = 15;
+  for (n = 1; n <= 30; n++) {
+    ctx.fillRect(380, squareY, 10, 10);
+    squareY += 35;
+  }
+
+  // Scoreboard
+  ctx.font = "50px Comic Sans MS, Comic Sans, cursive";
+  ctx.strokeStyle = "white";
+  ctx.strokeText(scoreLeft, 310, 70);
+  ctx.strokeText(scoreRight, 430, 70);
+
+  // The S key to move the paddle down
+  if (sIsPressed && paddleY1 < 500) {
+    paddleY1 += 5.75;
+  }
+
+  // The W key to move the paddle up
+  if (wIsPressed && paddleY1 > 0) {
+    paddleY1 -= 5.75;
+  }
+
+  // The arrow up to move the paddle up
+  if (arrowDIsPressed && paddleY2 < 500) {
+    paddleY2 += 5.75;
+  }
+
+  // The arrow down to move the paddle down
+  if (arrowUIsPressed && paddleY2 > 0) {
+    paddleY2 -= 5.75;
+  }
+
+  // Drawing the paddles
+  ctx.fillRect(20, paddleY1, 15, 100);
+  ctx.fillRect(765, paddleY2, 15, 100);
+}
 
 // Event Listeners
 document.addEventListener("keydown", keydownHandler);
@@ -152,7 +188,6 @@ function hardPong2p() {
 }
 
 function keydownHandler(event) {
-  console.log(event.code);
   // Checking if S or W key is pressed
   if (event.code === "KeyS") {
     sIsPressed = true;
@@ -182,15 +217,5 @@ function keyupHandler(event) {
     arrowUIsPressed = false;
   } else if (event.code === "ArrowDown") {
     arrowDIsPressed = false;
-  }
-}
-
-function mousedownHandler(event) {
-  mouseIsPressed = true;
-  if (mouseIsPressed){
-   // Update mouseX and mouseY
-   let cnvRect = cnv.getBoundingClientRect()
-   mouseX = event.x - cnvRect.x;
-   mouseY = event.y - cnvRect.y;
   }
 }

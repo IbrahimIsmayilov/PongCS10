@@ -2,27 +2,20 @@ body {
   text-align: center;
   font-weight: bolder;
   font-family: Comic Sans MS, Comic Sans, cursive;
+  
 }
 
 btn {
+  border: 2px solid black;
   cursor: pointer;
-  border: 2px solid white;
+}
+
+btn:hover {
+  background: orange;
 }
 
 .hidden {
   display: none;
 }
 
-.hOne {
-  border: 2px solid black;
-}
 
-.hTwo {
-  margin-top: 700px;
-  border: 2px solid black;
-}
-
-.oneBtn {
-  margin-top: 50px;
-  margin-right: 50px;
-}

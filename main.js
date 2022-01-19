@@ -13,8 +13,12 @@ let arrowUIsPressed = false;
 let arrowDIsPressed = false;
 let paddleY1 = 200;
 let paddleY2 = 200;
-let ballX = 350;
-let ballY = 160;
+let ball = {
+  x: 350,
+  y: 160,
+}
+let multiMode = false;
+let singleMode = false;
 let scoreLeft = 0;
 let scoreRight = 0;
 let frameCount = 0;
@@ -34,10 +38,14 @@ let hOne = document.getElementById("hOne");
 let hTwo = document.getElementById("hTwo");
 let randNum;
 let menuClick = document.getElementById("menuClick");
+let returnBtnEl = document.getElementById("returnBtn");
+let onePmodes = document.getElementById("1Pmodes");
+let twoPmodes = document.getElementById("2Pmodes");
+let firstBtns = document.getElementById("firstBtns");
+
 
 
 requestAnimationFrame(animateText);
-
 function animateText() {
   frameCountTwo++;
 
@@ -98,8 +106,7 @@ function animateText() {
   }
 
   if (frameCountTwo === 64) {
-    oneBtn.classList.remove("hidden");
-    twoBtn.classList.remove("hidden");
+    firstBtns.classList.remove("hidden");
   }
 
   requestAnimationFrame(animateText);
@@ -112,7 +119,7 @@ function pongTwoP() {
   if (frameCount > ballMoveFrame) {
 
     // Checking ball collision with the left paddle
-    if (ballX < 35 && ballX + 20 > 20 && ballY + 20 > paddleY1 && ballY < paddleY1 + 100) {
+    if (ball.x < 35 && ball.x + 20 > 20 && ball.y + 20 > paddleY1 && ball.y < paddleY1 + 100) {
       xVelocity *= -1;
       if (yVelocity === 0) {
         randNum = Math.random();
@@ -126,13 +133,13 @@ function pongTwoP() {
           }
         }
       }
-    } else if (ballX < -20) {
+    } else if (ball.x < -20) {
       scoreLeft++;
       ballMoveFrame = frameCount + 60;
     }
 
     // Checking ball collision with the right paddle
-    if (ballX + 20 > 765 && ballX < 780 && ballY + 20 > paddleY2 && ballY < paddleY2 + 100) {
+    if (ball.x + 20 > 765 && ball.x < 780 && ball.y + 20 > paddleY2 && ball.y < paddleY2 + 100) {
       xVelocity *= -1;
       if (yVelocity === 0) {
         randNum = Math.random();
@@ -146,7 +153,7 @@ function pongTwoP() {
           }
         }
       }
-    } else if (ballX > 800) {
+    } else if (ball.x > 800) {
       scoreRight++;
       ballMoveFrame = frameCount + 60;
     }
@@ -160,20 +167,20 @@ function pongTwoP() {
     movePaddle();
 
     // Drawing the ball
-    ctx.fillRect(ballX, ballY, 20, 20);
-    ballX += xVelocity;
-    ballY += yVelocity;
+    ctx.fillRect(ball.x, ball.y, 20, 20);
+    ball.x += xVelocity;
+    ball.y += yVelocity;
 
     // Checking ball collision with the top and bottom of the screen
-    if (ballY + 20 > canvas.height || ballY < 0) {
+    if (ball.y + 20 > canvas.height || ball.y < 0) {
       yVelocity *= -1;
     }
 
   } else {
     movePaddle();
     yVelocity = 0;
-    ballX = 350;
-    ballY = 160;
+    ball.x = 350;
+    ball.y = 160;
     if (frameCount === ballMoveFrame - 1)
       xVelocity *= -1;
   }
@@ -237,6 +244,21 @@ twoBtn.addEventListener("click", choseTwoP);
 easyBtn2p.addEventListener("click", easyPong2p);
 mediumBtn2p.addEventListener("click", mediumPong2p);
 hardBtn2p.addEventListener("click", hardPong2p);
+returnBtnEl.addEventListener("click", returnBtn);
+
+function returnBtn() {
+  menuClick.currentTime = 0;
+  menuClick.play();
+  if (onePmodes.classList !== "hidden" || twoPmodes.classList !== "hidden") {
+    twoPmodes.classList.add("hidden");
+    onePmodes.classList.add("hidden");
+    firstBtns.classList.remove("hidden");
+    returnBtnEl.classList.add("hidden");
+  }
+  if (cnv.classList !== "hidden" && ) {
+
+  }
+}
 
 
 function choseTwoP() {
@@ -244,46 +266,48 @@ function choseTwoP() {
   menuClick.play();
   hOne.classList.add("hidden");
   hTwo.classList.add("hidden");
-  oneBtn.classList.add("hidden");
-  twoBtn.classList.add("hidden");
-  easyBtn2p.classList.remove("hidden");
-  mediumBtn2p.classList.remove("hidden");
-  hardBtn2p.classList.remove("hidden");
+  firstBtns.classList.add("hidden");
+  twoPmodes.classList.remove("hidden");
+  returnBtnEl.classList.remove("hidden");
 }
 
 function choseOneP() {
+  menuClick.currentTime = 0;
+  menuClick.play();
   hOne.classList.add("hidden");
   hTwo.classList.add("hidden");
-  oneBtn.classList.add("hidden");
-  twoBtn.classList.add("hidden");
-  easyBtn1p.classList.remove("hidden");
-  mediumBtn1p.classList.remove("hidden");
-  hardBtn1p.classList.remove("hidden");
+  firstBtns.classList.add("hidden");
+  onePmodes.classList.remove("hidden");
+  returnBtnEl.classList.remove("hidden");
 }
 
 function easyPong2p() {
+  multiMode = true;
+  menuClick.currentTime = 0;
+  menuClick.play();
   xVelocity = -6;
-  easyBtn2p.classList.add("hidden");
-  mediumBtn2p.classList.add("hidden");
-  hardBtn2p.classList.add("hidden");
+  twoPmodes.classList.add("hidden");
+  returnBtn.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
 }
 
 function mediumPong2p() {
+  multiMode = true;
+  menuClick.currentTime = 0;
+  menuClick.play();
   xVelocity = 7;
-  easyBtn2p.classList.add("hidden");
-  mediumBtn2p.classList.add("hidden");
-  hardBtn2p.classList.add("hidden");
+  twoPmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
 }
 
 function hardPong2p() {
+  multiMode = true;
+  menuClick.currentTime = 0;
+  menuClick.play();
   xVelocity = 8;
-  easyBtn2p.classList.add("hidden");
-  mediumBtn2p.classList.add("hidden");
-  hardBtn2p.classList.add("hidden");
+  twoPmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
 }

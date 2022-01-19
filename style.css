@@ -18,4 +18,9 @@ btn:hover {
   display: none;
 }
 
+img {
+  margin-right: 800px;
+  width: 5%;
+  height: auto;
+}
 

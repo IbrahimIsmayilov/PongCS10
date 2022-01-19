@@ -2,27 +2,34 @@
 <html>
 
 <head>
-	<title>PONG</title>
-	<link rel="stylesheet" href="style.css">
+  <title>PONG</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h2 id="hTwo"></h1>
+  <h2 id="hTwo"></h2>
   <h1 id="hOne"></h1>
-  <btn id="oneBtn" class="hidden">SinglePlayer</btn>
-  <btn id="twoBtn" class="hidden">Multiplayer</btn>
-  <btn id="easyBtn1p" class="hidden">easy</btn>
-  <btn id="mediumBtn1p" class="hidden">medium</btn>
-  <btn id="hardBtn1p" class="hidden">hard</btn>
-  <btn id="easyBtn2p" class="hidden">easy</btn>
-  <btn id="mediumBtn2p" class="hidden">medium</btn>
-  <btn id="hardBtn2p" class="hidden">hard</btn>
-
+  <div id="firstBtns" class="hidden">
+    <btn id="oneBtn">SinglePlayer</btn>
+    <btn id="twoBtn">Multiplayer</btn>
+  </div>
+  <div id="1Pmodes" class="hidden">
+    <btn id="easyBtn1p">easy</btn>
+    <btn id="mediumBtn1p">medium</btn>
+    <btn id="hardBtn1p">hard</btn>
+  </div>
+  <div id="2Pmodes" class="hidden">
+    <btn id="easyBtn2p">easy</btn>
+    <btn id="mediumBtn2p">medium</btn>
+    <btn id="hardBtn2p">hard</btn>
+  </div>
+  <br>
+  <img id="returnBtn" class="hidden" src="imgs/return.png" alt="returnBtn">
   <audio id="menuClick" src="sounds/menuClick.mp3"></audio>
-	<canvas id="canvas" class="hidden"></canvas>
+  <canvas id="canvas" class="hidden"></canvas>
 
-	<script src="main.js">
-	</script>
+  <script src="main.js">
+  </script>
 </body>
 
 </html>

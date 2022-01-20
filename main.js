@@ -255,9 +255,12 @@ function returnBtn() {
     firstBtns.classList.remove("hidden");
     returnBtnEl.classList.add("hidden");
   }
-  // if (cnv.classList !== "hidden" && ) {
-
-  // }
+  if (cnv.classList !== "hidden" && multiMode) {
+    multiMode = false;
+    cnv.classList.add("hidden");
+    twoPmodes.classList.remove("hidden"); 
+    onePmodes.classList.add("hidden");
+  }
 }
 
 
@@ -287,9 +290,10 @@ function easyPong2p() {
   menuClick.play();
   xVelocity = -6;
   twoPmodes.classList.add("hidden");
-  returnBtn.classList.add("hidden");
+  returnBtnEl.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
+  console.log(xVelocity);
 }
 
 function mediumPong2p() {
@@ -300,6 +304,7 @@ function mediumPong2p() {
   twoPmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
+  console.log(xVelocity);
 }
 
 function hardPong2p() {
@@ -310,6 +315,7 @@ function hardPong2p() {
   twoPmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
+  console.log(xVelocity);
 }
 
 function keydownHandler(event) {

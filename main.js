@@ -255,9 +255,9 @@ function returnBtn() {
     firstBtns.classList.remove("hidden");
     returnBtnEl.classList.add("hidden");
   }
-  if (cnv.classList !== "hidden" && ) {
+  // if (cnv.classList !== "hidden" && ) {
 
-  }
+  // }
 }
 
 

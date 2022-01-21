@@ -46,6 +46,7 @@ let firstBtns = document.getElementById("firstBtns");
 
 
 requestAnimationFrame(animateText);
+
 function animateText() {
   frameCountTwo++;
 
@@ -120,6 +121,12 @@ function pongTwoP() {
 
     // Checking ball collision with the left paddle
     if (ball.x < 35 && ball.x + 20 > 20 && ball.y + 20 > paddleY1 && ball.y < paddleY1 + 100) {
+      if (ball.x < 35) {
+        yVelocity *= -1;
+        if (ball.x < 27.5) {
+          xVelocity *= -1;
+        }
+      }
       xVelocity *= -1;
       if (yVelocity === 0) {
         randNum = Math.random();
@@ -140,6 +147,12 @@ function pongTwoP() {
 
     // Checking ball collision with the right paddle
     if (ball.x + 20 > 765 && ball.x < 780 && ball.y + 20 > paddleY2 && ball.y < paddleY2 + 100) {
+      if (ball.x > 765) {
+        yVelocity *= -1;
+        if (ball.x > 770) {
+          xVelocity *= -1;
+        }
+      }
       xVelocity *= -1;
       if (yVelocity === 0) {
         randNum = Math.random();
@@ -258,7 +271,7 @@ function returnBtn() {
   if (cnv.classList !== "hidden" && multiMode) {
     multiMode = false;
     cnv.classList.add("hidden");
-    twoPmodes.classList.remove("hidden"); 
+    twoPmodes.classList.remove("hidden");
     onePmodes.classList.add("hidden");
   }
 }

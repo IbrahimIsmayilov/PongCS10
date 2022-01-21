@@ -24,7 +24,6 @@ let scoreRight = 0;
 let frameCount = 0;
 let ballMoveFrame = 0;
 let yVelocity = 0;
-let mouseIsPressed = false;
 let twoBtn = document.getElementById("twoBtn");
 let oneBtn = document.getElementById("oneBtn");
 let easyBtn1p = document.getElementById("easyBtn1p");
@@ -43,7 +42,15 @@ let onePmodes = document.getElementById("1Pmodes");
 let twoPmodes = document.getElementById("2Pmodes");
 let firstBtns = document.getElementById("firstBtns");
 
-
+function returnValues() {
+  let multiMode = false;
+  let singleMode = false;
+  let scoreLeft = 0;
+  let scoreRight = 0;
+  let frameCount = 0;
+  let ballMoveFrame = 0;
+  let yVelocity = 0;
+}
 
 requestAnimationFrame(animateText);
 
@@ -188,7 +195,7 @@ function pongTwoP() {
     if (ball.y + 20 > canvas.height || ball.y < 0) {
       yVelocity *= -1;
     }
-
+    
   } else {
     movePaddle();
     yVelocity = 0;
@@ -197,6 +204,7 @@ function pongTwoP() {
     if (frameCount === ballMoveFrame - 1)
       xVelocity *= -1;
   }
+  
 
   requestAnimationFrame(pongTwoP);
 }
@@ -270,9 +278,10 @@ function returnBtn() {
   }
   if (cnv.classList !== "hidden" && multiMode) {
     multiMode = false;
+    returnBtnEl.classList.remove("hidden");
     cnv.classList.add("hidden");
+    firstBtns.classList.add("hidden");
     twoPmodes.classList.remove("hidden");
-    onePmodes.classList.add("hidden");
   }
 }
 

@@ -17,8 +17,6 @@ let ball = {
   x: 350,
   y: 160,
 }
-let multiMode = false;
-let singleMode = false;
 let scoreLeft = 0;
 let scoreRight = 0;
 let frameCount = 0;
@@ -42,78 +40,68 @@ let onePmodes = document.getElementById("1Pmodes");
 let twoPmodes = document.getElementById("2Pmodes");
 let firstBtns = document.getElementById("firstBtns");
 
-function returnValues() {
-  let multiMode = false;
-  let singleMode = false;
-  let scoreLeft = 0;
-  let scoreRight = 0;
-  let frameCount = 0;
-  let ballMoveFrame = 0;
-  let yVelocity = 0;
-}
-
 requestAnimationFrame(animateText);
 
 function animateText() {
   frameCountTwo++;
 
-  if (frameCountTwo > 4) {
+  if (frameCountTwo > 3) {
     hTwo.innerHTML = "W";
   }
 
-  if (frameCountTwo > 8) {
+  if (frameCountTwo > 6) {
     hTwo.innerHTML += "e";
   }
 
-  if (frameCountTwo > 16) {
+  if (frameCountTwo > 9) {
     hTwo.innerHTML += "l";
   }
 
-  if (frameCountTwo > 20) {
+  if (frameCountTwo > 12) {
     hTwo.innerHTML += "c";
   }
 
-  if (frameCountTwo > 24) {
+  if (frameCountTwo > 15) {
     hTwo.innerHTML += "o";
   }
 
-  if (frameCountTwo > 28) {
+  if (frameCountTwo > 18) {
     hTwo.innerHTML += "m";
   }
 
-  if (frameCountTwo > 32) {
+  if (frameCountTwo > 21) {
     hTwo.innerHTML += "e";
   }
 
-  if (frameCountTwo > 36) {
+  if (frameCountTwo > 24) {
     hTwo.innerHTML += " T";
   }
 
-  if (frameCountTwo > 40) {
+  if (frameCountTwo > 27) {
     hTwo.innerHTML += "o";
   }
 
-  if (frameCountTwo > 44) {
+  if (frameCountTwo > 30) {
     hOne.innerHTML = "P";
   }
 
-  if (frameCountTwo > 48) {
+  if (frameCountTwo > 33) {
     hOne.innerHTML += "O";
   }
 
-  if (frameCountTwo > 52) {
+  if (frameCountTwo > 36) {
     hOne.innerHTML += "N";
   }
 
-  if (frameCountTwo > 56) {
+  if (frameCountTwo > 39) {
     hOne.innerHTML += "G";
   }
 
-  if (frameCountTwo > 60) {
+  if (frameCountTwo > 42) {
     hOne.innerHTML += "!";
   }
 
-  if (frameCountTwo === 64) {
+  if (frameCountTwo === 45) {
     firstBtns.classList.remove("hidden");
   }
 
@@ -128,6 +116,7 @@ function pongTwoP() {
 
     // Checking ball collision with the left paddle
     if (ball.x < 35 && ball.x + 20 > 20 && ball.y + 20 > paddleY1 && ball.y < paddleY1 + 100) {
+
       if (ball.x < 35) {
         yVelocity *= -1;
         if (ball.x < 27.5) {
@@ -143,10 +132,12 @@ function pongTwoP() {
           }
         } else {
           while (yVelocity >= -2) {
+            yVelocity *= -1;
             yVelocity = Math.random() * -5;
           }
         }
       }
+      ball.x = 35;
     } else if (ball.x < -20) {
       scoreLeft++;
       ballMoveFrame = frameCount + 60;
@@ -154,6 +145,7 @@ function pongTwoP() {
 
     // Checking ball collision with the right paddle
     if (ball.x + 20 > 765 && ball.x < 780 && ball.y + 20 > paddleY2 && ball.y < paddleY2 + 100) {
+
       if (ball.x > 765) {
         yVelocity *= -1;
         if (ball.x > 770) {
@@ -169,10 +161,12 @@ function pongTwoP() {
           }
         } else {
           while (yVelocity >= -2) {
+            yVelocity *= -1;
             yVelocity = Math.random() * -5;
           }
         }
       }
+      ball.x = 745;
     } else if (ball.x > 800) {
       scoreRight++;
       ballMoveFrame = frameCount + 60;
@@ -195,21 +189,18 @@ function pongTwoP() {
     if (ball.y + 20 > canvas.height || ball.y < 0) {
       yVelocity *= -1;
     }
-    
+
   } else {
-    movePaddle();
+    movePaddle(); // Specificially made into a function so that the player is able to move the paddles for a second even after the ball is off-screen. Makes the whole game feel more natural. 
     yVelocity = 0;
     ball.x = 350;
     ball.y = 160;
-    if (frameCount === ballMoveFrame - 1)
+    if (frameCount === ballMoveFrame - 1) // This is the last time this function is run before the if statement above in which if (frameCount > ballMoveFrame) equals true. Thus, this change in xVelocity is only going to run once and it is programmed to start the game with the ball heading towards the player who scored similar to how a soccer game starts after a goal is scored.  
       xVelocity *= -1;
   }
-  
 
   requestAnimationFrame(pongTwoP);
 }
-
-// How can the computer load code beyond this? Isn't the computer stuck in running this infinite function?
 
 
 function movePaddle() {
@@ -267,6 +258,7 @@ mediumBtn2p.addEventListener("click", mediumPong2p);
 hardBtn2p.addEventListener("click", hardPong2p);
 returnBtnEl.addEventListener("click", returnBtn);
 
+// What the return button does
 function returnBtn() {
   menuClick.currentTime = 0;
   menuClick.play();
@@ -276,16 +268,10 @@ function returnBtn() {
     firstBtns.classList.remove("hidden");
     returnBtnEl.classList.add("hidden");
   }
-  if (cnv.classList !== "hidden" && multiMode) {
-    multiMode = false;
-    returnBtnEl.classList.remove("hidden");
-    cnv.classList.add("hidden");
-    firstBtns.classList.add("hidden");
-    twoPmodes.classList.remove("hidden");
-  }
+
 }
 
-
+// If the player chooses multiplayer
 function choseTwoP() {
   menuClick.currentTime = 0;
   menuClick.play();
@@ -296,6 +282,7 @@ function choseTwoP() {
   returnBtnEl.classList.remove("hidden");
 }
 
+// If the player chooses singleplayer
 function choseOneP() {
   menuClick.currentTime = 0;
   menuClick.play();
@@ -306,8 +293,9 @@ function choseOneP() {
   returnBtnEl.classList.remove("hidden");
 }
 
+// Easy level pong in multiplayer mode
 function easyPong2p() {
-  multiMode = true;
+  returnBtnEl.classList.add("hidden");
   menuClick.currentTime = 0;
   menuClick.play();
   xVelocity = -6;
@@ -315,31 +303,31 @@ function easyPong2p() {
   returnBtnEl.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
-  console.log(xVelocity);
 }
 
+// Medium level pong in multiplayer mode
 function mediumPong2p() {
-  multiMode = true;
+  returnBtnEl.classList.add("hidden");
   menuClick.currentTime = 0;
   menuClick.play();
   xVelocity = 7;
   twoPmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
-  console.log(xVelocity);
 }
 
+// Hard level pong in multiplayer mode
 function hardPong2p() {
-  multiMode = true;
+  returnBtnEl.classList.add("hidden");
   menuClick.currentTime = 0;
   menuClick.play();
   xVelocity = 8;
   twoPmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
   pongTwoP();
-  console.log(xVelocity);
 }
 
+// Checking which keys are pressed
 function keydownHandler(event) {
   // Checking if S or W key is pressed
   if (event.code === "KeyS") {
@@ -357,6 +345,7 @@ function keydownHandler(event) {
 
 }
 
+// Checking which keys are released
 function keyupHandler(event) {
   // Checking if S or W key is released
   if (event.code === "KeyS") {

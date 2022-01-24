@@ -1,4 +1,11 @@
 // Pong by Ibrahim Ismayilov
+// Comments:
+// Make it so that the return button is present during the actual pong game
+// Try to fix the pong glitch still present in thursday's class
+// Paddle collision sounds 
+// Button transitions
+// Ask teacher to explain the strange relationship in the returnBtn function between the if statements "intertwining" when pressed during a pong game
+
 
 // Setting up canvas
 let cnv = document.getElementById("canvas");
@@ -38,10 +45,10 @@ let menuClick = document.getElementById("menuClick");
 let returnBtnEl = document.getElementById("returnBtn");
 let onePmodes = document.getElementById("1Pmodes");
 let twoPmodes = document.getElementById("2Pmodes");
-let firstBtns = document.getElementById("firstBtns");
+let singleMultiMode = document.getElementById("singleMultiMode");
+let multiPlay = false;
 
 requestAnimationFrame(animateText);
-
 function animateText() {
   frameCountTwo++;
 
@@ -102,7 +109,7 @@ function animateText() {
   }
 
   if (frameCountTwo === 45) {
-    firstBtns.classList.remove("hidden");
+    singleMultiMode.classList.remove("hidden");
   }
 
   requestAnimationFrame(animateText);
@@ -198,10 +205,15 @@ function pongTwoP() {
     if (frameCount === ballMoveFrame - 1) // This is the last time this function is run before the if statement above in which if (frameCount > ballMoveFrame) equals true. Thus, this change in xVelocity is only going to run once and it is programmed to start the game with the ball heading towards the player who scored similar to how a soccer game starts after a goal is scored.  
       xVelocity *= -1;
   }
-
+  if (multiPlay) {
   requestAnimationFrame(pongTwoP);
+} else {
+  
+  yVelocity = 0;
+  ball.x = 350;
+  ball.y = 160;
 }
-
+}
 
 function movePaddle() {
   // Drawing the background
@@ -265,10 +277,17 @@ function returnBtn() {
   if (onePmodes.classList !== "hidden" || twoPmodes.classList !== "hidden") {
     twoPmodes.classList.add("hidden");
     onePmodes.classList.add("hidden");
-    firstBtns.classList.remove("hidden");
+    singleMultiMode.classList.remove("hidden");
     returnBtnEl.classList.add("hidden");
   }
 
+  if (multiPlay) {
+    multiPlay = false;
+    cnv.classList.add("hidden");
+    returnBtnEl.classList.remove("hidden");
+    singleMultiMode.classList.add("hidden");
+    twoPmodes.classList.remove("hidden");
+  }
 }
 
 // If the player chooses multiplayer
@@ -277,7 +296,7 @@ function choseTwoP() {
   menuClick.play();
   hOne.classList.add("hidden");
   hTwo.classList.add("hidden");
-  firstBtns.classList.add("hidden");
+  singleMultiMode.classList.add("hidden");
   twoPmodes.classList.remove("hidden");
   returnBtnEl.classList.remove("hidden");
 }
@@ -288,42 +307,41 @@ function choseOneP() {
   menuClick.play();
   hOne.classList.add("hidden");
   hTwo.classList.add("hidden");
-  firstBtns.classList.add("hidden");
+  singleMultiMode.classList.add("hidden");
   onePmodes.classList.remove("hidden");
   returnBtnEl.classList.remove("hidden");
 }
 
 // Easy level pong in multiplayer mode
 function easyPong2p() {
-  returnBtnEl.classList.add("hidden");
   menuClick.currentTime = 0;
   menuClick.play();
   xVelocity = -6;
   twoPmodes.classList.add("hidden");
-  returnBtnEl.classList.add("hidden");
   cnv.classList.remove("hidden");
+  multiPlay = true;
   pongTwoP();
 }
 
 // Medium level pong in multiplayer mode
 function mediumPong2p() {
-  returnBtnEl.classList.add("hidden");
   menuClick.currentTime = 0;
   menuClick.play();
   xVelocity = 7;
   twoPmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
+  multiPlay = true;
   pongTwoP();
 }
 
 // Hard level pong in multiplayer mode
 function hardPong2p() {
-  returnBtnEl.classList.add("hidden");
   menuClick.currentTime = 0;
   menuClick.play();
   xVelocity = 8;
   twoPmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
+  multiPlay = true;
   pongTwoP();
 }
 
@@ -342,7 +360,6 @@ function keydownHandler(event) {
   } else if (event.code === "ArrowDown") {
     arrowDIsPressed = true;
   }
-
 }
 
 // Checking which keys are released

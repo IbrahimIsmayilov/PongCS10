@@ -1,10 +1,13 @@
 // Pong by Ibrahim Ismayilov
 // Comments:
-// Make it so that the return button is present during the actual pong game
 // Try to fix the pong glitch still present in thursday's class
 // Paddle collision sounds 
 // Button transitions
 // Ask teacher to explain the strange relationship in the returnBtn function between the if statements "intertwining" when pressed during a pong game
+// AI for singleplayer
+// Light or Dark mode?
+// Info section
+// Score cap
 
 
 // Setting up canvas
@@ -47,8 +50,10 @@ let onePmodes = document.getElementById("1Pmodes");
 let twoPmodes = document.getElementById("2Pmodes");
 let singleMultiMode = document.getElementById("singleMultiMode");
 let multiPlay = false;
+let textNotWritten = true;
 
 requestAnimationFrame(animateText);
+
 function animateText() {
   frameCountTwo++;
 
@@ -110,9 +115,12 @@ function animateText() {
 
   if (frameCountTwo === 45) {
     singleMultiMode.classList.remove("hidden");
+    textNotWritten = false;
   }
 
-  requestAnimationFrame(animateText);
+  if (textNotWritten) {
+    requestAnimationFrame(animateText);
+  }
 }
 
 function pongTwoP() {
@@ -206,13 +214,13 @@ function pongTwoP() {
       xVelocity *= -1;
   }
   if (multiPlay) {
-  requestAnimationFrame(pongTwoP);
-} else {
-  
-  yVelocity = 0;
-  ball.x = 350;
-  ball.y = 160;
-}
+    requestAnimationFrame(pongTwoP);
+  } else {
+
+    yVelocity = 0;
+    ball.x = 350;
+    ball.y = 160;
+  }
 }
 
 function movePaddle() {

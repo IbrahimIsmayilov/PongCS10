@@ -131,14 +131,19 @@ function pongTwoP() {
 
     // Checking ball collision with the left paddle
     if (ball.x < 35 && ball.x + 20 > 20 && ball.y + 20 > paddleY1 && ball.y < paddleY1 + 100) {
-
-      if (ball.x < 35) {
+      // Checking if the ball collides with the top or bottom of the paddle
+      if (ball.y + 20 < paddleY1) {
         yVelocity *= -1;
-        if (ball.x < 27.5) {
+        // Checking if the ball collides with the left half of the top or bottom of a paddle
+        if (ball.x + 20 < 27.5) {
           xVelocity *= -1;
         }
+        // If the ball does not the collide with the top or bottom of the paddle, then its x value becomes 35. When the x value becomes 35 and the ball hits the top or bottom of the paddle, the sudden change of the x value makes the game seem glitchy or unnatural. 
+      } else {
+        ball.x = 35;
       }
       xVelocity *= -1;
+      // The yVelocity equals 0 after a mode is selected and a Pong game begins. It also equals 0 after a point is scored. The ball then heads towards the player who scored and if the paddle hits it, it gains a random yValue that has a 50 percent chance of being between 2 to 5 and a 50 percent chance of being between -5 to -2.  
       if (yVelocity === 0) {
         randNum = Math.random();
         if (randNum < 0.5) {
@@ -152,7 +157,6 @@ function pongTwoP() {
           }
         }
       }
-      ball.x = 35;
     } else if (ball.x < -20) {
       scoreLeft++;
       ballMoveFrame = frameCount + 60;
@@ -160,14 +164,19 @@ function pongTwoP() {
 
     // Checking ball collision with the right paddle
     if (ball.x + 20 > 765 && ball.x < 780 && ball.y + 20 > paddleY2 && ball.y < paddleY2 + 100) {
-
-      if (ball.x > 765) {
+      // Checking if the ball collides with the top and bottom of the paddle
+      if (ball.y + 20 < paddleY2 || ball.y > paddleY2 + 100) {
         yVelocity *= -1;
+        // Checking if the ball collides with the right half of the top or bottom of a paddle
         if (ball.x > 770) {
           xVelocity *= -1;
         }
+      } else {
+        // If the ball does not the collide with the top or bottom of the paddle, then its x value becomes 745. When the x value becomes 745 and the ball hits the top or bottom of the paddle, the sudden change of the x value makes the game seem glitchy or unnatural. 
+        ball.x = 745;
       }
       xVelocity *= -1;
+      // The yVelocity equals 0 after a mode is selected and a Pong game begins. It also equals 0 after a point is scored. The ball then heads towards the player who scored and if the paddle hits it, it gains a random yValue that has a 50 percent chance of being between 2 to 5 and a 50 percent chance of being between -5 to -2.  
       if (yVelocity === 0) {
         randNum = Math.random();
         if (randNum < 0.5) {
@@ -181,7 +190,6 @@ function pongTwoP() {
           }
         }
       }
-      ball.x = 745;
     } else if (ball.x > 800) {
       scoreRight++;
       ballMoveFrame = frameCount + 60;

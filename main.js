@@ -31,7 +31,7 @@ let scoreLeft = 0;
 let scoreRight = 0;
 let frameCount = 0;
 let ballMoveFrame = 0;
-let yVelocity = 2.2;
+let yVelocity = 0;
 let twoBtn = document.getElementById("twoBtn");
 let oneBtn = document.getElementById("oneBtn");
 let easyBtn1p = document.getElementById("easyBtn1p");
@@ -131,23 +131,41 @@ function pongTwoP() {
 
     // Checking ball collision with the left paddle
     if (ball.x < 35 && ball.x + 20 > 20 && ball.y + 20 > paddleY1 && ball.y < paddleY1 + 100) {
-      xVelocity *= -1;  
-
+      // Checking where the ball collides on the paddle
+      xVelocity *= -1;
       if (ball.y + 20 < paddleY1) {
-        if (2 < yVelocity < 5) {
-        yVelocity *= -1;
-        }
         ball.y = paddleY1 - 20;
-      } else if (ball.y > paddleY1 + 100) {
-        if (-2 > yVelocity > -5) {
-          yVelocity *= -1;
+        if (yVelocity === 0) {
+          while (yVelocity < 2) {
+            yVelocity = Math.random() * 5;
+          }
+        } else {
+          if (2 < yVelocity < 5) {
+            yVelocity *= -1;
+          }
         }
+      } else if (ball.y > paddleY1 + 100) {
         ball.y = paddleY1 + 100;
+        if (yVelocity === 0) {
+          while (yVelocity > -2) {
+            yVelocity = Math.random() * -5;
+          }
+        } else {
+          if (-2 > yVelocity > -5) {
+            yVelocity *= -1;
+          }
+        }
       } else {
+        randNum = Math.random();
+        if (yVelocity === 0) {
+          if (randNum < 0.5) {
+            yVelocity = Math.random() * -5;
+          } else {
+            yVelocity = Math.random() * 5;
+          }
+        }
         ball.x = 35;
       }
-
-      // The yVelocity equals 0 after a mode is selected and a Pong game begins. It also equals 0 after a point is scored. The ball then heads towards the player who scored and if the paddle hits it, it gains a random yValue that has a 50 percent chance of being between 2 to 5 and a 50 percent chance of being between -5 to -2.  
     } else if (ball.x < -20) {
       scoreLeft++;
       ballMoveFrame = frameCount + 60;
@@ -155,31 +173,40 @@ function pongTwoP() {
 
     // Checking ball collision with the right paddle
     if (ball.x + 20 > 765 && ball.x < 780 && ball.y + 20 > paddleY2 && ball.y < paddleY2 + 100) {
-      // Checking if the ball collides with the top and bottom of the paddle
-      if (ball.y + 20 < paddleY2 || ball.y > paddleY2 + 100) {
-        yVelocity *= -1;
-        // Checking if the ball collides with the right half of the top or bottom of a paddle
-        if (ball.x > 770) {
-          xVelocity *= -1;
-        }
-      } else {
-        // If the ball does not the collide with the top or bottom of the paddle, then its x value becomes 745. When the x value becomes 745 and the ball hits the top or bottom of the paddle, the sudden change of the x value makes the game seem glitchy or unnatural. 
-        ball.x = 745;
-      }
+      // Checking where the ball collides on the paddle
       xVelocity *= -1;
-      // The yVelocity equals 0 after a mode is selected and a Pong game begins. It also equals 0 after a point is scored. The ball then heads towards the player who scored and if the paddle hits it, it gains a random yValue that has a 50 percent chance of being between 2 to 5 and a 50 percent chance of being between -5 to -2.  
-      if (yVelocity === 0) {
-        randNum = Math.random();
-        if (randNum < 0.5) {
-          while (yVelocity <= 2) {
+      if (ball.y + 20 < paddleY2) {
+        ball.y = paddleY2 - 20;
+        if (yVelocity === 0) {
+          while (yVelocity < 2) {
             yVelocity = Math.random() * 5;
           }
         } else {
-          while (yVelocity >= -2) {
+          if (2 < yVelocity < 5) {
             yVelocity *= -1;
-            yVelocity = Math.random() * -5;
           }
         }
+      } else if (ball.y > paddleY2 + 100) {
+        ball.y = paddleY2 + 100;
+        if (yVelocity === 0) {
+          while (yVelocity > -2) {
+            yVelocity = Math.random() * -5;
+          }
+        } else {
+          if (-2 > yVelocity > -5) {
+            yVelocity *= -1;
+          }
+        }
+      } else {
+        randNum = Math.random();
+        if (yVelocity === 0) {
+          if (randNum < 0.5) {
+            yVelocity = Math.random() * -5;
+          } else {
+            yVelocity = Math.random() * 5;
+          }
+        }
+        ball.x = 745;
       }
     } else if (ball.x > 800) {
       scoreRight++;
@@ -192,6 +219,7 @@ function pongTwoP() {
       paddleY2 = 200;
     }
 
+    // The function to keep track of the scoreboard, move the paddles and so forth. Made into a function because it will be reused later in the program. 
     movePaddle();
 
     // Drawing the ball
@@ -206,7 +234,7 @@ function pongTwoP() {
 
   } else {
     movePaddle(); // Specificially made into a function so that the player is able to move the paddles for a second even after the ball is off-screen. Makes the whole game feel more natural. 
-    yVelocity = 3;
+    yVelocity = 0;
     ball.x = 350;
     ball.y = 160;
     if (frameCount === ballMoveFrame - 1) // This is the last time this function is run before the if statement above in which if (frameCount > ballMoveFrame) equals true. Thus, this change in xVelocity is only going to run once and it is programmed to start the game with the ball heading towards the player who scored similar to how a soccer game starts after a goal is scored.  
@@ -215,9 +243,11 @@ function pongTwoP() {
   if (multiPlay) {
     requestAnimationFrame(pongTwoP);
   } else {
-    yVelocity = 3;
+    yVelocity = 0;
     ball.x = 350;
     ball.y = 160;
+    paddleY1 = 200;
+    paddleY2 = 200;
   }
 }
 
@@ -322,7 +352,7 @@ function choseOneP() {
 function easyPong2p() {
   menuClick.currentTime = 0;
   menuClick.play();
-  xVelocity = -1;
+  xVelocity = 6;
   twoPmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
   multiPlay = true;
@@ -383,6 +413,7 @@ function keyupHandler(event) {
   } else if (event.code === "ArrowDown") {
     arrowDIsPressed = false;
 
-  
+
   }
 }
+

@@ -31,7 +31,7 @@ let scoreLeft = 0;
 let scoreRight = 0;
 let frameCount = 0;
 let ballMoveFrame = 0;
-let yVelocity = 0;
+let yVelocity = 2.2;
 let twoBtn = document.getElementById("twoBtn");
 let oneBtn = document.getElementById("oneBtn");
 let easyBtn1p = document.getElementById("easyBtn1p");
@@ -131,32 +131,23 @@ function pongTwoP() {
 
     // Checking ball collision with the left paddle
     if (ball.x < 35 && ball.x + 20 > 20 && ball.y + 20 > paddleY1 && ball.y < paddleY1 + 100) {
-      // Checking if the ball collides with the top or bottom of the paddle
+      xVelocity *= -1;  
+
       if (ball.y + 20 < paddleY1) {
+        if (2 < yVelocity < 5) {
         yVelocity *= -1;
-        // Checking if the ball collides with the left half of the top or bottom of a paddle
-        if (ball.x + 20 < 27.5) {
-          xVelocity *= -1;
         }
-        // If the ball does not the collide with the top or bottom of the paddle, then its x value becomes 35. When the x value becomes 35 and the ball hits the top or bottom of the paddle, the sudden change of the x value makes the game seem glitchy or unnatural. 
+        ball.y = paddleY1 - 20;
+      } else if (ball.y > paddleY1 + 100) {
+        if (-2 > yVelocity > -5) {
+          yVelocity *= -1;
+        }
+        ball.y = paddleY1 + 100;
       } else {
         ball.x = 35;
       }
-      xVelocity *= -1;
+
       // The yVelocity equals 0 after a mode is selected and a Pong game begins. It also equals 0 after a point is scored. The ball then heads towards the player who scored and if the paddle hits it, it gains a random yValue that has a 50 percent chance of being between 2 to 5 and a 50 percent chance of being between -5 to -2.  
-      if (yVelocity === 0) {
-        randNum = Math.random();
-        if (randNum < 0.5) {
-          while (yVelocity <= 2) {
-            yVelocity = Math.random() * 5;
-          }
-        } else {
-          while (yVelocity >= -2) {
-            yVelocity *= -1;
-            yVelocity = Math.random() * -5;
-          }
-        }
-      }
     } else if (ball.x < -20) {
       scoreLeft++;
       ballMoveFrame = frameCount + 60;
@@ -215,7 +206,7 @@ function pongTwoP() {
 
   } else {
     movePaddle(); // Specificially made into a function so that the player is able to move the paddles for a second even after the ball is off-screen. Makes the whole game feel more natural. 
-    yVelocity = 0;
+    yVelocity = 3;
     ball.x = 350;
     ball.y = 160;
     if (frameCount === ballMoveFrame - 1) // This is the last time this function is run before the if statement above in which if (frameCount > ballMoveFrame) equals true. Thus, this change in xVelocity is only going to run once and it is programmed to start the game with the ball heading towards the player who scored similar to how a soccer game starts after a goal is scored.  
@@ -224,8 +215,7 @@ function pongTwoP() {
   if (multiPlay) {
     requestAnimationFrame(pongTwoP);
   } else {
-
-    yVelocity = 0;
+    yVelocity = 3;
     ball.x = 350;
     ball.y = 160;
   }
@@ -332,7 +322,7 @@ function choseOneP() {
 function easyPong2p() {
   menuClick.currentTime = 0;
   menuClick.play();
-  xVelocity = -6;
+  xVelocity = -1;
   twoPmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
   multiPlay = true;
@@ -392,5 +382,7 @@ function keyupHandler(event) {
     arrowUIsPressed = false;
   } else if (event.code === "ArrowDown") {
     arrowDIsPressed = false;
+
+  
   }
 }

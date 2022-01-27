@@ -56,7 +56,6 @@ let frameCountThree = 0;
 let stageOne = 0;
 let stageTwo = 0;
 let stageThree = 0;
-let stageFour = 0;
 let easyAI = false;
 let mediumAI = false;
 let hardAI = false;
@@ -557,68 +556,72 @@ function resetVariables() {
   stageOne = 0;
   stageTwo = 0;
   stageThree = 0;
-  stageFour = 0;
   repeat = 0;
 }
 
 function easyAIMode() {
-  while (400 > stageOne && stageOne > 500) {
+  while (400 > stageOne || stageOne > 520) {
     stageOne = Math.random() * 800;
   }
-  while (500 > stageTwo && stageTwo > 600) {
+  while (520 > stageTwo || stageTwo > 640) {
     stageTwo = Math.random() * 800;
   }
 
-  while (600 > stageTwo && stageTwo > 700) {
+  while (640 > stageThree || stageThree > 760) {
     stageThree = Math.random() * 800;
   }
 
-  while (700 > stageTwo && stageTwo > 750) {
-    stageFour = Math.random() * 800;
-  }
 
   if (repeat < 2) {
     repeat++;
     randNum = Math.random();
   }
 
-  if (randNum < 0.25) {
+  if (randNum < 0.75) {
     if (yVelocity !== 0) {
-      if (ball.x > stageOne && paddleY2 > 0) {
-        if (ball.y < 300) {
-          paddleY2 -= 5;
+      if (ball.x > stageOne) {
+        if (ball.y < 300 && paddleY2 > 0) {
+          paddleY2 -= 6.15;
         } else if (ball.y > 300 && paddleY2 < 500) {
-          paddleY2 += 5;
+          paddleY2 += 6.15;
+        }
+      } else {
+        if (paddleY2 < 200) {
+          paddleY2 += 4;
+        } else if (paddleY2 > 400) {
+          paddleY2 -= 4;
         }
       }
     }
-  } else if (randNum < 0.5) {
+  } else if (randNum < 0.875) {
     if (yVelocity !== 0) {
       if (ball.x > stageTwo) {
         if (ball.y < 300 && paddleY2 > 0) {
-          paddleY2 -= 5;
+          paddleY2 -= 6.15;
         } else if (ball.y > 300 && paddleY2 < 500) {
-          paddleY2 += 5;
+          paddleY2 += 6.15;
+        }
+      } else {
+        if (paddleY2 < 200) {
+          paddleY2 += 4;
+        } else if (paddleY2 > 400) {
+          paddleY2 -= 4;
         }
       }
     }
-  } else if (randNum < 0.75) {
+  } else {
     if (yVelocity !== 0) {
       if (ball.x > stageThree) {
         if (ball.y < 300 && paddleY2 > 0) {
-          paddleY2 -= 5;
-        } else if (ball.y > 300 && paddleY2 < 500)  {
-          paddleY2 += 5;
+          paddleY2 -= 6.15;
+        } else if (ball.y < padd && paddleY2 < 500) {
+          paddleY2 += 6.15;
         }
-      }
-    } 
-  } else {
-    if (ball.x > stageFour && paddleY2 > 0) {
-      if (yVelocity !== 0) {
-        if (ball.y < 300) {
-          paddleY2 -= 5;
-        } else if (ball.y > 300 && paddleY2 < 500) {
-          paddleY2 += 5;
+      } else {
+        if (paddleY2 < 200) {
+          paddleY2 += 4;
+        } else if (paddleY2 > 400) {
+          paddleY2 -= 4;
         }
       }
     }

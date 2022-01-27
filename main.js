@@ -55,7 +55,6 @@ let textNotWritten = true;
 let frameCountThree = 0;
 let stageOne = 0;
 let stageTwo = 0;
-let stageThree = 0;
 let easyAI = false;
 let mediumAI = false;
 let hardAI = false;
@@ -145,34 +144,37 @@ function pongOneP() {
       // Checking where the ball collides on the paddle
       xVelocity *= -1;
       ball.x = 35;
+      // Checking if the ball collides with the top of the paddle
       if (ball.y < paddleY1 && paddleY1 > ball.y + 10) {
-        if (ball.x + 20 < 27.5) {
-          xVelocity *= -1;
-        }
+        // Changing the y value if it does collide with the top
         ball.y = paddleY1 - 20;
+        // If the y velocity is 0 which happens when a pong game first starts or someone scores and if it hits the top, it should only go upwards since that looks more natural. 
         if (yVelocity === 0) {
           while (yVelocity > -2) {
             yVelocity = Math.random() * -5;
           }
+          // If the ball is heading down and it collides with the top of the paddle, the paddle hits it back up by finding multiplying the y velocity. However this should not happen if the ball is going up and it hits the top of the paddle since that would look strange and unnatural. 
         } else {
           if (2 < yVelocity < 5) {
             yVelocity *= -1;
           }
         }
+      // Checking if the ball collides with the bottom of the paddle
       } else if (ball.y + 20 > paddleY1 + 100 && paddleY1 + 100 < ball.y + 10) {
-        if (ball.x + 20 < 27.5) {
-          xVelocity *= -1;
-        }
+        // Changing the y value if it does collide with the top
         ball.y = paddleY1 + 100;
+        // If the y velocity is 0 which happens when a pong game first starts or someone scores and if it hits the bottom, it should only go down since that looks more natural. 
         if (yVelocity === 0) {
           while (yVelocity < 2) {
             yVelocity = Math.random() * 5;
           }
         } else {
+          // If the ball is heading up and it collides with the bottom of the paddle, the paddle hits it back down by finding multiplying the y velocity. However this should not happen if the ball is going down and it hits the bottom of the paddle since that would look strange and unnatural. 
           if (-2 > yVelocity > -5) {
             yVelocity *= -1;
           }
         }
+        // If the ball collides with the side of the paddle
       } else {
         randNum = Math.random();
         if (yVelocity === 0) {
@@ -187,20 +189,19 @@ function pongOneP() {
           }
         }
       }
+      // Updating the score and giving the user a second before the game starts again
     } else if (ball.x < -20) {
       scoreLeft++;
       ballMoveFrameTwo = frameCountThree + 60;
     }
 
     // Checking ball collision with the right paddle
+    // The same functions as the left paddle
     if (ball.x + 20 > 765 && ball.x < 780 && ball.y + 20 > paddleY2 && ball.y < paddleY2 + 100) {
       // Checking where the ball collides on the paddle
       ball.x = 745;
       xVelocity *= -1;
       if (ball.y < paddleY2 && paddleY2 > ball.y + 10) {
-        if (ball.x > 772.5) {
-          xVelocity *= -1;
-        }
         ball.y = paddleY2 - 20;
         if (yVelocity === 0) {
           while (yVelocity > -2) {
@@ -239,6 +240,7 @@ function pongOneP() {
           }
         }
       }
+      // Updating the score and giving the user a second before the game starts again
     } else if (ball.x > 800) {
       scoreRight++;
       ballMoveFrameTwo = frameCountThree + 60;
@@ -296,7 +298,7 @@ function pongOneP() {
   }
 }
 
-
+// Multiplayer pong with the same principles as the singleplayer one. The only thing that differs is that now you can control two paddles with the arrow up or down keys.
 function pongTwoP() {
   // Updating the frame count every 1/60th of a second
   frameCount++;
@@ -526,15 +528,17 @@ hardBtn1p.addEventListener("click", hardPong1p);
 
 // What the return button does
 function returnBtn() {
+  // Sounds
   menuClick.currentTime = 0;
   menuClick.play();
+  // If the player is choosing modes and the return button is clicked, it goes to the starting screen
   if (onePmodes.classList !== "hidden" || twoPmodes.classList !== "hidden") {
     twoPmodes.classList.add("hidden");
     onePmodes.classList.add("hidden");
     singleMultiMode.classList.remove("hidden");
     returnBtnEl.classList.add("hidden");
   }
-
+  // If the player exits during a multiplayer pong game by pressing the return button, only the multiplayer options are shown. 
   if (multiPlay) {
     multiPlay = false;
     cnv.classList.add("hidden");
@@ -542,7 +546,7 @@ function returnBtn() {
     singleMultiMode.classList.add("hidden");
     twoPmodes.classList.remove("hidden");
   }
-
+// Same principles as the previous comment
   if (singlePlay) {
     singlePlay = false;
     returnBtnEl.classList.remove("hidden");
@@ -552,10 +556,10 @@ function returnBtn() {
   }
 }
 
+// Resetting variables after someone scores
 function resetVariables() {
   stageOne = 0;
   stageTwo = 0;
-  stageThree = 0;
   repeat = 0;
 }
 
@@ -567,17 +571,12 @@ function easyAIMode() {
     stageTwo = Math.random() * 800;
   }
 
-  while (640 > stageThree || stageThree > 760) {
-    stageThree = Math.random() * 800;
-  }
-
-
   if (repeat < 2) {
     repeat++;
     randNum = Math.random();
   }
 
-  if (randNum < 0.75) {
+  if (randNum < 0.70) {
     if (yVelocity !== 0) {
       if (ball.x > stageOne) {
         if (ball.y < 300 && paddleY2 > 0) {
@@ -593,7 +592,7 @@ function easyAIMode() {
         }
       }
     }
-  } else if (randNum < 0.875) {
+  } else {
     if (yVelocity !== 0) {
       if (ball.x > stageTwo) {
         if (ball.y < 300 && paddleY2 > 0) {
@@ -609,12 +608,28 @@ function easyAIMode() {
         }
       }
     }
-  } else {
+  } 
+}
+
+function mediumAIMode() {
+  while (400 > stageOne || stageOne > 520) {
+    stageOne = Math.random() * 800;
+  }
+  while (520 > stageTwo || stageTwo > 640) {
+    stageTwo = Math.random() * 800;
+  }
+
+  if (repeat < 2) {
+    repeat++;
+    randNum = Math.random();
+  }
+
+  if (randNum < 0.80) {
     if (yVelocity !== 0) {
-      if (ball.x > stageThree) {
+      if (ball.x > stageOne) {
         if (ball.y < 300 && paddleY2 > 0) {
           paddleY2 -= 6.15;
-        } else if (ball.y < padd && paddleY2 < 500) {
+        } else if (ball.y > 300 && paddleY2 < 500) {
           paddleY2 += 6.15;
         }
       } else {
@@ -625,7 +640,71 @@ function easyAIMode() {
         }
       }
     }
+  } else {
+    if (yVelocity !== 0) {
+      if (ball.x > stageTwo) {
+        if (ball.y < 300 && paddleY2 > 0) {
+          paddleY2 -= 6.15;
+        } else if (ball.y > 300 && paddleY2 < 500) {
+          paddleY2 += 6.15;
+        }
+      } else {
+        if (paddleY2 < 200) {
+          paddleY2 += 4;
+        } else if (paddleY2 > 400) {
+          paddleY2 -= 4;
+        }
+      }
+    }
+  } 
+}
+
+function hardAIMode() {
+  while (400 > stageOne || stageOne > 520) {
+    stageOne = Math.random() * 800;
   }
+  while (520 > stageTwo || stageTwo > 640) {
+    stageTwo = Math.random() * 800;
+  }
+
+  if (repeat < 2) {
+    repeat++;
+    randNum = Math.random();
+  }
+
+  if (randNum < 0.90) {
+    if (yVelocity !== 0) {
+      if (ball.x > stageOne) {
+        if (ball.y < 300 && paddleY2 > 0) {
+          paddleY2 -= 6.15;
+        } else if (ball.y > 300 && paddleY2 < 500) {
+          paddleY2 += 6.15;
+        }
+      } else {
+        if (paddleY2 < 200) {
+          paddleY2 += 4;
+        } else if (paddleY2 > 400) {
+          paddleY2 -= 4;
+        }
+      }
+    }
+  } else {
+    if (yVelocity !== 0) {
+      if (ball.x > stageTwo) {
+        if (ball.y < 300 && paddleY2 > 0 && 2 < yVelocity < 5) {
+          paddleY2 -= 6.15;
+        } else if (ball.y > 300 && paddleY2 < 500) {
+          paddleY2 += 6.15;
+        }
+      } else {
+        if (paddleY2 < 200) {
+          paddleY2 += 4;
+        } else if (paddleY2 > 400) {
+          paddleY2 -= 4;
+        }
+      }
+    }
+  } 
 }
 
 // If the player chooses multiplayer
@@ -700,7 +779,7 @@ function easyPong1p() {
 function mediumPong1p() {
   menuClick.currentTime = 0;
   menuClick.play();
-  xVelocity = 8.5;
+  xVelocity = 8;
   onePmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
   singlePlay = true;
@@ -712,7 +791,7 @@ function mediumPong1p() {
 function hardPong1p() {
   menuClick.currentTime = 0;
   menuClick.play();
-  xVelocity = 9;
+  xVelocity = 8;
   onePmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
   singlePlay = true;

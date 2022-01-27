@@ -145,6 +145,9 @@ function pongOneP() {
       xVelocity *= -1;
       ball.x = 35;
       if (ball.y < paddleY1 && paddleY1 > ball.y + 10) {
+        if (ball.x + 20 < 27.5) {
+          xVelocity *= -1;
+        }
         ball.y = paddleY1 - 20;
         if (yVelocity === 0) {
           while (yVelocity > -2) {
@@ -156,6 +159,9 @@ function pongOneP() {
           }
         }
       } else if (ball.y + 20 > paddleY1 + 100 && paddleY1 + 100 < ball.y + 10) {
+        if (ball.x + 20 < 27.5) {
+          xVelocity *= -1;
+        }
         ball.y = paddleY1 + 100;
         if (yVelocity === 0) {
           while (yVelocity < 2) {
@@ -191,6 +197,9 @@ function pongOneP() {
       ball.x = 745;
       xVelocity *= -1;
       if (ball.y < paddleY2 && paddleY2 > ball.y + 10) {
+        if (ball.x > 772.5) {
+          xVelocity *= -1;
+        }
         ball.y = paddleY2 - 20;
         if (yVelocity === 0) {
           while (yVelocity > -2) {
@@ -202,6 +211,9 @@ function pongOneP() {
           }
         }
       } else if (ball.y + 20 > paddleY2 + 100 && paddleY2 + 100 < ball.y + 10) {
+        if (ball.x > 772.5) {
+          xVelocity *= -1;
+        }
         ball.y = paddleY2 + 100;
         if (yVelocity === 0) {
           while (yVelocity < 2) {
@@ -557,7 +569,7 @@ function easyPong2p() {
   twoPmodes.classList.add("hidden");
   cnv.classList.remove("hidden");
   multiPlay = true;
-  pongOneP();
+  pongTwoP();
 }
 
 // Medium level pong in multiplayer mode
